@@ -54,7 +54,7 @@ class Routes
   end
 
   on_message '/equipo' do |bot, message|
-    bot.api.send_message(chat_id: message.chat.id, text: "Hola Nairobi")
+    bot.api.send_message(chat_id: message.chat.id, text: 'Hola Nairobi')
   end
   default do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Uh? No te entiendo! Me repetis la pregunta?')
