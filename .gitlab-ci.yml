@@ -5,8 +5,8 @@ services:
 
 variables:
   REGISTRY_URL: registry.gitlab.com/fiuba-memo2/ejemplos
-  APP_NAME: telegram-bot-example
-  KUBE_NAMESPACE_PREFIX: docentes
+  APP_NAME: nairobi-bot
+  KUBE_NAMESPACE_PREFIX: nairobi
 
 stages:
   - build
