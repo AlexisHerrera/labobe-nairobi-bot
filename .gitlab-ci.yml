@@ -4,7 +4,7 @@ services:
   - docker:dind
 
 variables:
-  REGISTRY_URL: registry.gitlab.com/fiuba-memo2/ejemplos
+  REGISTRY_URL: registry.gitlab.com/fiuba-memo2/tp2-20221
   APP_NAME: nairobi-bot
   KUBE_NAMESPACE_PREFIX: nairobi
 
@@ -42,7 +42,7 @@ package_job:
 
 deploy_test_job:
   stage: deploy_test
-  image: nicopaez/kubectl:1.17.5
+  image: nicopaez/kubectl:1.22.0
   environment: test
   script:
     - VERSION=$(cat VERSION.txt)
@@ -54,7 +54,7 @@ deploy_test_job:
 
 deploy_prod_job:
   stage: deploy_prod
-  image: nicopaez/kubectl:1.17.5
+  image: nicopaez/kubectl:1.22.0
   environment: prod
   script:
     - VERSION=$(cat VERSION.txt)
