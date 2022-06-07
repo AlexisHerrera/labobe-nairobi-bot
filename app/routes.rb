@@ -53,7 +53,7 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: Version.current)
   end
 
-  on_message '/version' do |bot, message|
+  on_message '/equipo' do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: "Hola Nairobi")
   end
   default do |bot, message|
