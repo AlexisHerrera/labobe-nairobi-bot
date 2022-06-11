@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'web_mock'
+require 'byebug'
 # Uncomment to use VCR
 # require 'vcr_helper'
 
@@ -73,6 +74,25 @@ def then_i_get_keyboard_message(token, message_text)
               'text' => message_text }
     )
     .to_return(status: 200, body: body.to_json, headers: {})
+end
+
+def cuando_me_registro(_token, _message_text)
+  # debugger
+  body = { 'nombre' => 'Juan',
+           'numero' => '1144449999',
+           'direccion' => 'paseo colon 850' }
+
+  stub_request(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios')
+    .with(
+      body: '{"nombre":"Juan","numero":"1144449999","direccion":"paseo colon 850"}',
+      headers: {
+        'Accept' => '*/*',
+        'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+        'Content-Type' => 'application/x-www-form-urlencoded',
+        'User-Agent' => 'Faraday v0.15.4'
+      }
+    )
+    .to_return(status: 201, body: body.to_json, headers: { 'Content-Length' => 3 })
 end
 
 describe 'BotClient' do

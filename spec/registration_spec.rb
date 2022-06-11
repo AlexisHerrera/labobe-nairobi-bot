@@ -16,12 +16,11 @@ describe 'Registro' do
     app.run_once
   end
 
-  xit 'deberia obtener un mensaje /registro y responder con ¡Bienvenido!, te registraste exitosamente.' do
+  xit 'cuando me /registro deberia responder con Bienvenido nombre!, te registraste exitosamente.' do
     token = 'fake_token'
-
-    when_i_send_text(token, '/registrar Juan, 1144449999, paseo colon 850')
-    then_i_get_text(token, '¡Bienvenido!, te registraste exitosamente.')
-
+    when_i_send_text(token, '/registrar Juan, 1144449999, paseo colon 850') # envio mensaje
+    cuando_me_registro(token, '/registrar Juan, 1144449999, paseo colon 850') # llamado a la api
+    # then_i_get_text(token, 'Bienvenido Juan!, te registraste exitosamente.') # recibo mensaje
     app = BotClient.new(token)
     app.run_once
   end

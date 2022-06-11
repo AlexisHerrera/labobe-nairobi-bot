@@ -1,9 +1,11 @@
 require "#{File.dirname(__FILE__)}/../lib/routing"
 require "#{File.dirname(__FILE__)}/../lib/version"
 require "#{File.dirname(__FILE__)}/tv/series"
+require_relative 'api_bobe.rb'
 
 class Routes
   include Routing
+  api_bobe = APIBobe.new
 
   on_message '/start' do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: "Hola, #{message.from.first_name}")
@@ -56,6 +58,13 @@ class Routes
   on_message '/equipo' do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Hola Nairobi')
   end
+
+  on_message_pattern %r{/registrar (?<nombre>.*), (?<numero>.*), (?<direccion>.*)} do |bot, message, args|
+    # mensaje a nuestra api que se maneja en el bot #{args['name']}
+    respuesta = api_bobe.registro_usuario(args['nombre'], args['numero'], args['direccion'], 'key')
+    bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{respuesta.nombre} !, te registraste exitosamente.")
+  end
+
   default do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Uh? No te entiendo! Me repetis la pregunta?')
   end
