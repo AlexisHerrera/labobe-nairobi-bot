@@ -76,23 +76,18 @@ def then_i_get_keyboard_message(token, message_text)
     .to_return(status: 200, body: body.to_json, headers: {})
 end
 
-def cuando_me_registro(_token, _message_text)
-  # debugger
-  body = { 'nombre' => 'Juan',
-           'numero' => '1144449999',
-           'direccion' => 'paseo colon 850' }
+def configurar_api(request, url, body_request, status, body_response)
+  post_request = {}
+  post_request['headers'] = { 'Accept' => '*/*',
+                              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                              'Content-Type' => 'application/json',
+                              'User-Agent' => 'Faraday v0.15.4' }
 
-  stub_request(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios')
-    .with(
-      body: '{"nombre":"Juan","numero":"1144449999","direccion":"paseo colon 850"}',
-      headers: {
-        'Accept' => '*/*',
-        'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        'Content-Type' => 'application/x-www-form-urlencoded',
-        'User-Agent' => 'Faraday v0.15.4'
-      }
-    )
-    .to_return(status: 201, body: body.to_json, headers: { 'Content-Length' => 3 })
+  post_request['body'] = body_request
+
+  stub_request(request, url)
+    .with(post_request)
+    .to_return(status: status, body: body_response, headers: {})
 end
 
 describe 'BotClient' do
@@ -172,4 +167,20 @@ describe 'BotClient' do
 
     app.run_once
   end
+end
+
+def dado_que_me_quiero_registrar
+  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: 'Juan', numero: '1144449999', direccion: 'paseo colon 850' }.to_json, 201, { nombre: 'Juan', telefono: '1144449999', direccion: 'paseo colon 850' }.to_json)
+end
+
+def cuando_envio(token, mensaje)
+  when_i_send_text(token, mensaje)
+end
+
+def entonces_estoy_registrado
+  # todo
+end
+
+def y_recibo_mensaje(token, mensaje)
+  then_i_get_text(token, mensaje)
 end

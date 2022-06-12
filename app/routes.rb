@@ -60,9 +60,9 @@ class Routes
   end
 
   on_message_pattern %r{/registrar (?<nombre>.*), (?<numero>.*), (?<direccion>.*)} do |bot, message, args|
-    # mensaje a nuestra api que se maneja en el bot #{args['name']}
-    respuesta = api_bobe.registro_usuario(args['nombre'], args['numero'], args['direccion'], 'key')
-    bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{respuesta.nombre} !, te registraste exitosamente.")
+    respuesta = api_bobe.registro_usuario(args['nombre'], args['numero'], args['direccion'])
+    # mensaje = parser.parse(respuesta)
+    bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{respuesta['nombre']}!, te registraste exitosamente.")
   end
 
   default do |bot, message|
