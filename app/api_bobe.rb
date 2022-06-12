@@ -9,12 +9,13 @@ class APIBobe
     url = obtener_url('/usuarios')
     parametros = { 'nombre' => nombre, 'numero' => numero, 'direccion' => direccion }.to_json
     respuesta = Faraday.post(url, parametros, @header)
-    JSON.parse(respuesta.body)
+    respuesta
   end
 
   private
 
   def obtener_url(directorio)
+    # TODO: La base de la url debe ser una variable de entorno
     'https://labobe-nairobi-test.herokuapp.com' + directorio
   end
 end

@@ -2,7 +2,7 @@ require "#{File.dirname(__FILE__)}/../lib/routing"
 require "#{File.dirname(__FILE__)}/../lib/version"
 require "#{File.dirname(__FILE__)}/tv/series"
 require_relative 'api_bobe.rb'
-
+require 'byebug'
 class Routes
   include Routing
   api_bobe = APIBobe.new
@@ -61,8 +61,12 @@ class Routes
 
   on_message_pattern %r{/registrar (?<nombre>.*), (?<numero>.*), (?<direccion>.*)} do |bot, message, args|
     respuesta = api_bobe.registro_usuario(args['nombre'], args['numero'], args['direccion'])
-    # mensaje = parser.parse(respuesta)
-    bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{respuesta['nombre']}!, te registraste exitosamente.")
+    if respuesta.status == 201
+      nombre = JSON.parse(respuesta.body)['nombre']
+      bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{nombre}!, te registraste exitosamente.")
+    else
+      bot.api.send_message(chat_id: message.chat.id, text: 'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850')
+    end
   end
 
   default do |bot, message|
