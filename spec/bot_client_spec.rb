@@ -177,6 +177,10 @@ def dado_que_me_quiero_registrar_mal(nombre, numero, direccion)
   configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: nombre, numero: numero, direccion: direccion }.to_json, 400, { mensaje: 'Argumentos invalidos' }.to_json)
 end
 
+def dado_que_me_quiero_sin_numero(nombre, direccion)
+  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: nombre, direccion: direccion }.to_json, 400, { mensaje: 'Argumentos invalidos' }.to_json)
+end
+
 def cuando_envio(token, mensaje)
   when_i_send_text(token, mensaje)
 end

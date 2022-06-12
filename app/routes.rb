@@ -69,6 +69,10 @@ class Routes
     end
   end
 
+  on_message_pattern %r{/registrar (?<nombre>.*), (?<direccion>.*)} do |bot, message|
+    bot.api.send_message(chat_id: message.chat.id, text: 'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850')
+  end
+
   default do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Uh? No te entiendo! Me repetis la pregunta?')
   end
