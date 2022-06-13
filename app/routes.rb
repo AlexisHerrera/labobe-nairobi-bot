@@ -59,8 +59,8 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: 'Hola Nairobi')
   end
 
-  on_message_pattern %r{/registrar (?<nombre>.*), (?<numero>.*), (?<direccion>.*)} do |bot, message, args|
-    respuesta = api_bobe.registro_usuario(args['nombre'], args['numero'], args['direccion'])
+  on_message_pattern %r{/registrar (?<nombre>.*), (?<telefono>.*), (?<direccion>.*)} do |bot, message, args|
+    respuesta = api_bobe.registro_usuario(args['nombre'], args['telefono'], args['direccion'])
     if respuesta.status == 201
       nombre = JSON.parse(respuesta.body)['nombre']
       bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{nombre}!, te registraste exitosamente.")

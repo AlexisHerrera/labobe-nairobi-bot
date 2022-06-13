@@ -92,7 +92,7 @@ describe 'Registro' do
   it 'cuando me /registro sin ingresar la información necesaria' do
     nombre = '1J23'
     direccion = 'paseo colon 850'
-    dado_que_me_quiero_sin_numero(nombre, direccion)
+    dado_que_me_quiero_registrar_sin_telefono(nombre, direccion)
     cuando_envio(token, "/registrar #{nombre}, #{direccion}")
     entonces_no_estoy_registrado
     y_recibo_mensaje(token, 'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850')

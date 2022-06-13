@@ -170,14 +170,14 @@ describe 'BotClient' do
 end
 
 def dado_que_me_quiero_registrar
-  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: 'Juan', numero: '1144449999', direccion: 'paseo colon 850' }.to_json, 201, { nombre: 'Juan', telefono: '1144449999', direccion: 'paseo colon 850' }.to_json)
+  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: 'Juan', telefono: '1144449999', direccion: 'paseo colon 850' }.to_json, 201, { nombre: 'Juan', telefono: '1144449999', direccion: 'paseo colon 850' }.to_json)
 end
 
-def dado_que_me_quiero_registrar_mal(nombre, numero, direccion)
-  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: nombre, numero: numero, direccion: direccion }.to_json, 400, { mensaje: 'Argumentos invalidos' }.to_json)
+def dado_que_me_quiero_registrar_mal(nombre, telefono, direccion)
+  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: nombre, telefono: telefono, direccion: direccion }.to_json, 400, { mensaje: 'Argumentos invalidos' }.to_json)
 end
 
-def dado_que_me_quiero_sin_numero(nombre, direccion)
+def dado_que_me_quiero_registrar_sin_telefono(nombre, direccion)
   configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: nombre, direccion: direccion }.to_json, 400, { mensaje: 'Argumentos invalidos' }.to_json)
 end
 

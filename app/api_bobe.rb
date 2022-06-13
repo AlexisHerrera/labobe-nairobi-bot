@@ -5,9 +5,9 @@ class APIBobe
     }
   end
 
-  def registro_usuario(nombre, numero, direccion)
+  def registro_usuario(nombre, telefono, direccion)
     url = obtener_url('/usuarios')
-    parametros = { 'nombre' => nombre, 'numero' => numero, 'direccion' => direccion }.to_json
+    parametros = { 'nombre' => nombre, 'telefono' => telefono, 'direccion' => direccion }.to_json
     respuesta = Faraday.post(url, parametros, @header)
     respuesta
   end
