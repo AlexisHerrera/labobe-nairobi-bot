@@ -15,7 +15,6 @@ class APIBobe
   private
 
   def obtener_url(directorio)
-    # TODO: La base de la url debe ser una variable de entorno
-    'https://labobe-nairobi-test.herokuapp.com' + directorio
+    (ENV['API_URL']).to_s + directorio
   end
 end

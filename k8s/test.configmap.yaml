@@ -4,3 +4,4 @@ metadata:
   name: botconfig
 data:
   LOG_LEVEL: "debug"
+  API_URL: "https://labobe-nairobi-test.herokuapp.com/"
