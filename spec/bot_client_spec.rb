@@ -168,31 +168,3 @@ describe 'BotClient' do
     app.run_once
   end
 end
-
-def dado_que_me_quiero_registrar
-  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: 'Juan', telefono: '1144449999', direccion: 'paseo colon 850' }.to_json, 201, { nombre: 'Juan', telefono: '1144449999', direccion: 'paseo colon 850' }.to_json)
-end
-
-def dado_que_me_quiero_registrar_mal(nombre, telefono, direccion)
-  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: nombre, telefono: telefono, direccion: direccion }.to_json, 400, { mensaje: 'Argumentos invalidos' }.to_json)
-end
-
-def dado_que_me_quiero_registrar_sin_telefono(nombre, direccion)
-  configurar_api(:post, 'https://labobe-nairobi-test.herokuapp.com/usuarios', { nombre: nombre, direccion: direccion }.to_json, 400, { mensaje: 'Argumentos invalidos' }.to_json)
-end
-
-def cuando_envio(token, mensaje)
-  when_i_send_text(token, mensaje)
-end
-
-def entonces_estoy_registrado
-  # todo
-end
-
-def entonces_no_estoy_registrado
-  # todo
-end
-
-def y_recibo_mensaje(token, mensaje)
-  then_i_get_text(token, mensaje)
-end
