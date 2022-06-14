@@ -3,7 +3,6 @@ require "#{File.dirname(__FILE__)}/../lib/version"
 require "#{File.dirname(__FILE__)}/tv/series"
 require_relative 'api_bobe.rb'
 require 'byebug'
-require 'semantic_logger'
 require_relative 'errors/usuario_invalido.rb'
 
 class Routes
@@ -62,10 +61,9 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: 'Hola Nairobi')
   end
 
-  on_message_pattern %r{/registrar (?<nombre>.*), (?<telefono>.*), (?<direccion>.*)} do |bot, message, args, _logger|
+  on_message_pattern %r{/registrar (?<nombre>.*), (?<telefono>.*), (?<direccion>.*)} do |bot, message, args|
     usuario = api_bobe.registro_usuario(args['nombre'], args['telefono'], args['direccion'])
     bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{usuario.nombre}!, te registraste exitosamente.")
-    # @logger.info "#{message} => usuario creado exitosamente"
   rescue UsuarioInvalido
     # @logger.info "#{message} => usuario invalido"
     bot.api.send_message(chat_id: message.chat.id, text: 'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850')
