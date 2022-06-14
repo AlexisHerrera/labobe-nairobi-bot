@@ -8,6 +8,8 @@ require_relative 'errors/usuario_invalido.rb'
 class Routes
   include Routing
   api_bobe = APIBobe.new
+  # TODO: Ubicar el logger dentro del bot
+  bot_logger = SemanticLogger['BotClient']
 
   on_message '/start' do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: "Hola, #{message.from.first_name}")
@@ -64,13 +66,14 @@ class Routes
   on_message_pattern %r{/registrar (?<nombre>.*), (?<telefono>.*), (?<direccion>.*)} do |bot, message, args|
     usuario = api_bobe.registro_usuario(args['nombre'], args['telefono'], args['direccion'])
     bot.api.send_message(chat_id: message.chat.id, text: "Bienvenido #{usuario.nombre}!, te registraste exitosamente.")
+    bot_logger.info "Registro de usuario exitoso: #{args} "
   rescue UsuarioInvalido
-    # @logger.info "#{message} => usuario invalido"
+    bot_logger.info "Error al registrar usuario: #{args}"
     bot.api.send_message(chat_id: message.chat.id, text: 'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850')
   end
 
-  on_message_pattern %r{/registrar (?<nombre>.*), (?<direccion>.*)} do |bot, message, _logger|
-    # @logger.info "#{message} => mensaje invalido"
+  on_message_pattern %r{/registrar (?<nombre>.*), (?<direccion>.*)} do |bot, message, args|
+    bot_logger.info "Error de parametros en registrar: #{args}"
     bot.api.send_message(chat_id: message.chat.id, text: 'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850')
   end
 
