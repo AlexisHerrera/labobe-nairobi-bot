@@ -1,3 +1,6 @@
+require_relative 'errors/usuario_invalido.rb'
+require_relative 'usuario.rb'
+
 class APIBobe
   def initialize
     @header = {
@@ -9,7 +12,10 @@ class APIBobe
     url = obtener_url('/usuarios')
     parametros = { 'nombre' => nombre, 'telefono' => telefono, 'direccion' => direccion }.to_json
     respuesta = Faraday.post(url, parametros, @header)
-    respuesta
+    raise UsuarioInvalido if respuesta.status != 201
+
+    cuerpo_respuesta = JSON.parse(respuesta.body)
+    Usuario.new(cuerpo_respuesta['nombre'], cuerpo_respuesta['telefono'], cuerpo_respuesta['direccion'])
   end
 
   private
