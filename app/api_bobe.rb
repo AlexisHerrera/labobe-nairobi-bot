@@ -1,23 +1,32 @@
 require_relative 'errors/usuario_invalido.rb'
+require_relative 'errors/usuario_ya_registrado.rb'
 require_relative 'usuario.rb'
 require 'semantic_logger'
-
+require 'byebug'
 class APIBobe
   def initialize
     @header = {
       'Content-Type' => 'application/json'
     }
+    # TODO: Centralizar configuracion de logger en una carpeta loggers/logger_api
+    # Como ya esta configurado en bot_client el logger no hace falta hacerlo de vuelta
+    @logger = SemanticLogger['APIBobe']
   end
 
-  def registro_usuario(nombre, telefono, direccion)
+  # rubocop:disable Metrics/AbcSize
+  def registro_usuario(nombre, telefono, direccion, id_telegram)
     url = obtener_url('/usuarios')
-    parametros = { 'nombre' => nombre, 'telefono' => telefono, 'direccion' => direccion }.to_json
+    parametros = { 'nombre' => nombre, 'telefono' => telefono, 'direccion' => direccion, 'id_telegram' => id_telegram }.to_json
     respuesta = Faraday.post(url, parametros, @header)
+    @logger.info "Registro usuario respuesta de la API: #{respuesta.to_hash}"
+    raise UsuarioYaRegistrado if respuesta.status == 200
+
     raise UsuarioInvalido if respuesta.status != 201
 
     cuerpo_respuesta = JSON.parse(respuesta.body)
     Usuario.new(cuerpo_respuesta['nombre'], cuerpo_respuesta['telefono'], cuerpo_respuesta['direccion'])
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 

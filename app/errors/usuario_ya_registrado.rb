@@ -1,0 +1,1 @@
+class UsuarioYaRegistrado < StandardError; end

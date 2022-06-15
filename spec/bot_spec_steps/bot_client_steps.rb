@@ -4,7 +4,7 @@ require 'byebug'
 # Uncomment to use VCR
 # require 'vcr_helper'
 
-require "#{File.dirname(__FILE__)}/../app/bot_client"
+require "#{File.dirname(__FILE__)}/../../app/bot_client"
 
 def when_i_send_text(token, message_text)
   body = { "ok": true, "result": [{ "update_id": 693_981_718,
@@ -88,4 +88,9 @@ def configurar_api(request, url, body_request, status, body_response)
   stub_request(request, url)
     .with(post_request)
     .to_return(status: status, body: body_response, headers: {})
+end
+
+def start_bot(token)
+  app = BotClient.new(token)
+  app.run_once
 end
