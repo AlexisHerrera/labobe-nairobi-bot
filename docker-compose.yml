@@ -12,7 +12,7 @@ services:
         - .:/app
     environment:
         RACK_ENV: "development"
-        API_URL: http://webapp:3000/
+        API_URL: http://webapp:3000
 
 networks:
   default:
