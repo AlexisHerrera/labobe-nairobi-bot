@@ -32,11 +32,11 @@ class APIBobe
     url = obtener_url('/menus')
     respuesta = Faraday.get(url)
 
-    @logger.info "Status code /menus: #{respuesta.status}"
+    # @logger.info "Status code /menus: #{respuesta.status}"
 
     # raise StandardError if respuesta.status != 200
-
-    @logger.info "Respuesta de pedido de menu de la api: #{respuesta.to_hash}"
+    # Pruebo si el error esta aqui. Mi intuicion es que un get no tiene .to_hash
+    # @logger.info "Respuesta de pedido de menu de la api: #{respuesta.to_hash}"
 
     cuerpo_respuesta = JSON.parse(respuesta.body)
     menus = []
