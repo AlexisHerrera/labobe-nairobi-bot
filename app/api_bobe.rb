@@ -32,7 +32,9 @@ class APIBobe
     url = obtener_url('/menus')
     respuesta = Faraday.get(url)
 
-    raise StandardError if respuesta.status != 200
+    @logger.info "Status code /menus: #{respuesta.status}"
+
+    # raise StandardError if respuesta.status != 200
 
     @logger.info "Respuesta de pedido de menu de la api: #{respuesta.to_hash}"
 
