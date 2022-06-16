@@ -78,16 +78,19 @@ end
 
 def configurar_api(request, url, body_request, status, body_response)
   post_request = {}
-  post_request['headers'] = { 'Accept' => '*/*',
-                              'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-                              'Content-Type' => 'application/json',
-                              'User-Agent' => 'Faraday v0.15.4' }
 
-  post_request['body'] = body_request
+  stub = stub_request(request, url)
+  unless body_request.nil?
+    post_request['headers'] = { 'Accept' => '*/*',
+                                'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                                'Content-Type' => 'application/json',
+                                'User-Agent' => 'Faraday v0.15.4' }
+    post_request['body'] = body_request
 
-  stub_request(request, url)
-    .with(post_request)
-    .to_return(status: status, body: body_response, headers: {})
+    stub.with(post_request)
+  end
+
+  stub.to_return(status: status, body: body_response, headers: {})
 end
 
 def start_bot(token)

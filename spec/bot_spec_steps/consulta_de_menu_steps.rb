@@ -3,11 +3,11 @@ require_relative 'bot_client_steps'
 def dado_que_quiero_conocer_los_menues
   configurar_api(:get,
                  obtener_url('/menus'),
-                 {}.to_json,
+                 nil,
                  200,
-                 [{ id: 1, descripcion: 'Menu Individual', precio: 1000.0 },
-                  { id: 2, descripcion: 'Menu Parejas', precio: 1500.0 },
-                  { id: 3, descripcion: 'Menu Familiar', precio: 2500.0 }].to_json)
+                 [{ id: 1, descripcion: 'Menu individual', precio: 1000.0 },
+                  { id: 2, descripcion: 'Menu parejas', precio: 1500.0 },
+                  { id: 3, descripcion: 'Menu familiar', precio: 2500.0 }].to_json)
 end
 
 def cuando_envio(token, mensaje)

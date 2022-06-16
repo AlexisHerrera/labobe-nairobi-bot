@@ -81,6 +81,13 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: 'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850')
   end
 
+  on_message '/menus' do |bot, message|
+    menus = api_bobe.pedir_menus
+    mensaje = []
+    menus.each { |menu| mensaje.push("#{menu.id}-#{menu.descripcion} ($#{menu.precio})") }
+    bot.api.send_message(chat_id: message.chat.id, text: mensaje.join(', '))
+  end
+
   default do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Uh? No te entiendo! Me repetis la pregunta?')
   end

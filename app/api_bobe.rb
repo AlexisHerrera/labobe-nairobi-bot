@@ -28,6 +28,20 @@ class APIBobe
   end
   # rubocop:enable Metrics/AbcSize
 
+  def pedir_menus
+    url = obtener_url('/menus')
+    respuesta = Faraday.get(url)
+    raise Error if respuesta.status != 200
+
+    @logger.info "Respuesta de pedido de menu de la api: #{respuesta.to_hash}"
+
+    cuerpo_respuesta = JSON.parse(respuesta.body)
+    menus = []
+    cuerpo_respuesta.each { |menu| menus.push(Menu.new(menu['id'], menu['descripcion'], menu['precio'])) }
+
+    menus
+  end
+
   private
 
   def obtener_url(directorio)
