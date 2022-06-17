@@ -2,10 +2,10 @@ require_relative 'bot_client_steps'
 
 def dado_que_quiero_pedir_un_menu
   configurar_api(:post,
-                 obtener_url('/pedido'),
-                 { id_menu: 1 },
+                 obtener_url('/pedidos'),
+                 { id_menu: 1, id_usuario: 1_144_449_999 },
                  201,
-                 { id: 1, id_menu: 1 }.to_json)
+                 { id: 1, id_menu: 1, id_usuario: 1_144_449_999 }.to_json)
 end
 
 def cuando_envio(token, mensaje)
