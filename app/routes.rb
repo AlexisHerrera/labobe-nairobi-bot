@@ -57,7 +57,6 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: 'No se pudo realizar el pedido. Asegurarse de estar registrado o solicitar un menu valido.')
   end
 
-
   default do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Uh? No te entiendo! Me repetis la pregunta?')
   end
