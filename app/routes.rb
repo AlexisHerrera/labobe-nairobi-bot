@@ -5,6 +5,7 @@ require_relative 'api_bobe.rb'
 require 'byebug'
 require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
+require_relative 'errors/pedido_invalido.rb'
 
 class Routes
   include Routing
@@ -86,6 +87,14 @@ class Routes
     mensaje = []
     menus.each { |menu| mensaje.push("#{menu.id}-#{menu.descripcion} ($#{menu.precio})") }
     bot.api.send_message(chat_id: message.chat.id, text: mensaje.join(', '))
+  end
+
+  on_message_pattern %r{/pedir (?<menu>.*)} do |bot, message, args|
+    pedido = api_bobe.hacer_pedido(message.from.id.to_i, args['menu'].to_i)
+    bot.api.send_message(chat_id: message.chat.id, text: "Su pedido ha sido registrado: N° #{pedido.id}.")
+  rescue PedidoInvalido
+    bot_logger.info "Error al realizar pedido: #{args}"
+    bot.api.send_message(chat_id: message.chat.id, text: 'No se pudo realizar el pedido. Asegurarse de estar registrado o solicitar un menu valido.')
   end
 
   default do |bot, message|

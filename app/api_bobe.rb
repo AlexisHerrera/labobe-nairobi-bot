@@ -2,6 +2,7 @@ require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
 require_relative 'usuario.rb'
 require_relative 'menu.rb'
+require_relative 'pedido.rb'
 require 'semantic_logger'
 require 'byebug'
 class APIBobe
@@ -41,6 +42,19 @@ class APIBobe
     cuerpo_respuesta.each { |menu| menus.push(Menu.new(menu['id'], menu['descripcion'], menu['precio'])) }
 
     menus
+  end
+
+  def hacer_pedido(id_usuario, id_menu)
+    url = obtener_url('/pedidos')
+    parametros = { 'id_usuario' => id_usuario, 'id_menu' => id_menu }.to_json
+
+    respuesta = Faraday.post(url, parametros, @header)
+    @logger.info "Pedido menu respuesta de la API: #{respuesta.to_hash}"
+
+    raise PedidoInvalido if respuesta.status != 201
+
+    cuerpo_respuesta = JSON.parse(respuesta.body)
+    Pedido.new(cuerpo_respuesta['id_pedido'], cuerpo_respuesta['id_usuario'], cuerpo_respuesta['id_menu'])
   end
   # rubocop:enable Metrics/AbcSize
 
