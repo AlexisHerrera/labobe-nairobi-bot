@@ -51,11 +51,12 @@ class Routes
 
   on_message_pattern %r{/pedir (?<menu>.*)} do |bot, message, args|
     pedido = api_bobe.hacer_pedido(message.from.id.to_i, args['menu'].to_i)
-    bot.api.send_message(chat_id: message.chat.id, text: "Su pedido ha sido registrado: N° #{pedido.id}.")
+    bot.api.send_message(chat_id: message.chat.id, text: "Su pedido ha sido registrado: N° #{pedido.id_pedido}.")
   rescue PedidoInvalido
     bot_logger.info "Error al realizar pedido: #{args}"
     bot.api.send_message(chat_id: message.chat.id, text: 'No se pudo realizar el pedido. Asegurarse de estar registrado o solicitar un menu valido.')
   end
+
 
   default do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Uh? No te entiendo! Me repetis la pregunta?')

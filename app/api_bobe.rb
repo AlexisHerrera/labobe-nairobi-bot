@@ -54,7 +54,7 @@ class APIBobe
     raise PedidoInvalido if respuesta.status != 201
 
     cuerpo_respuesta = JSON.parse(respuesta.body)
-    Pedido.new(cuerpo_respuesta['id_pedido'], cuerpo_respuesta['id_usuario'], cuerpo_respuesta['id_menu'])
+    Pedido.new(cuerpo_respuesta['id_pedido'], cuerpo_respuesta['estado'])
   end
   # rubocop:enable Metrics/AbcSize
 

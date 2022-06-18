@@ -1,9 +1,8 @@
 class Pedido
-  attr_reader :id, :id_pedido, :id_usuario
+  attr_reader :id_pedido, :estado
 
-  def initialize(id, id_pedido, id_usuario)
-    @id = id
+  def initialize(id_pedido, estado)
     @id_pedido = id_pedido
-    @id_usuario = id_usuario
+    @estado = estado
   end
 end
