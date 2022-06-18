@@ -14,4 +14,13 @@ describe 'Hacer pedido de menu' do
     start_bot(token)
     expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
   end
+
+  it 'cuando pido un menu inexistente me responde con un error' do
+    dado_que_quiero_pedir_un_menu_inexistente
+    cuando_envio(token, '/pedir 4')
+    y_recibo_mensaje(token, 'No se pudo realizar el pedido. Asegurarse de estar registrado o solicitar un menu valido.')
+
+    start_bot(token)
+    expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
+  end
 end

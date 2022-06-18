@@ -3,9 +3,23 @@ require_relative 'bot_client_steps'
 def dado_que_quiero_pedir_un_menu
   request = { "id_usuario": 141_733_544, "id_menu": 1 }.to_json
   response = { "id_pedido": 1, "id_menu": 1, "id_usuario": 715_612_264 }.to_json
-  stub_request(:post, obtener_url('/pedidos')) .with(
-    body: request
-  ).to_return(status: 201, body: response, headers: {})
+
+  configurar_api(:post,
+                 obtener_url('/pedidos'),
+                 request,
+                 201,
+                 response)
+end
+
+def dado_que_quiero_pedir_un_menu_inexistente
+  request = { "id_usuario": 141_733_544, "id_menu": 4 }.to_json
+  response = { mensaje: 'Argumentos invalidos' }.to_json
+
+  configurar_api(:post,
+                 obtener_url('/pedidos'),
+                 request,
+                 400,
+                 response)
 end
 
 def cuando_envio(token, mensaje)
