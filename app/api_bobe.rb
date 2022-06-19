@@ -56,6 +56,19 @@ class APIBobe
     cuerpo_respuesta = JSON.parse(respuesta.body)
     Pedido.new(cuerpo_respuesta['id_pedido'], cuerpo_respuesta['estado'])
   end
+
+  def consultar_pedido(id_usuario, id_pedido)
+    url = obtener_url('/pedidos')
+    parametros = { 'id_usuario' => id_usuario, 'id_pedido' => id_pedido }.to_json
+
+    respuesta = Faraday.get(url, parametros, @header)
+    @logger.info "Consultar pedido respuesta de la API: #{respuesta.to_hash}"
+
+    raise PedidoInvalido if respuesta.status != 200
+
+    cuerpo_respuesta = JSON.parse(respuesta.body)
+    Pedido.new(cuerpo_respuesta['id_pedido'], cuerpo_respuesta['estado'])
+  end
   # rubocop:enable Metrics/AbcSize
 
   private
