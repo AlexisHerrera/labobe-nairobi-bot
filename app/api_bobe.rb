@@ -15,15 +15,11 @@ class APIBobe
     @logger = SemanticLogger['APIBobe']
   end
 
-  # rubocop:disable Metrics/AbcSize
   def registro_usuario(nombre, telefono, direccion, id_telegram)
-    url = obtener_url('/usuarios')
-    parametros = { 'nombre' => nombre, 'telefono' => telefono, 'direccion' => direccion, 'id_telegram' => id_telegram }.to_json
-    respuesta = Faraday.post(url, parametros, @header)
-    @logger.info "Registro usuario respuesta de la API: #{respuesta.to_hash}"
-    raise UsuarioYaRegistrado if respuesta.status == 200
+    respuesta = registrar_usuario(direccion, id_telegram, nombre, telefono)
+    raise UsuarioYaRegistrado if es_usuario_registrado(respuesta)
 
-    raise UsuarioInvalido if respuesta.status != 201
+    raise UsuarioInvalido if error_al_registrarse(respuesta)
 
     cuerpo_respuesta = JSON.parse(respuesta.body)
     Usuario.new(cuerpo_respuesta['nombre'], cuerpo_respuesta['telefono'], cuerpo_respuesta['direccion'])
@@ -69,9 +65,28 @@ class APIBobe
     cuerpo_respuesta = JSON.parse(respuesta.body)
     Pedido.new(cuerpo_respuesta['id_pedido'], cuerpo_respuesta['estado'])
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
+
+  def error_al_registrarse(respuesta)
+    hay_error = respuesta.status != 201
+    @logger.info 'Error al registrar al usuario'
+    hay_error
+  end
+
+  def es_usuario_registrado(respuesta)
+    el_usuario_esta_registrado = respuesta.status == 200
+    @logger.info 'El usuario ya esta registrado'
+    el_usuario_esta_registrado
+  end
+
+  def registrar_usuario(direccion, id_telegram, nombre, telefono)
+    url = obtener_url('/usuarios')
+    parametros = { 'nombre' => nombre, 'telefono' => telefono, 'direccion' => direccion, 'id_telegram' => id_telegram }.to_json
+    respuesta = Faraday.post(url, parametros, @header)
+    @logger.info "Registro usuario respuesta de la API: #{respuesta.to_hash}"
+    respuesta
+  end
 
   def obtener_url(directorio)
     (ENV['API_URL']).to_s + directorio
