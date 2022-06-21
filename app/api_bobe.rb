@@ -44,16 +44,16 @@ class APIBobe
   def consultar_pedido(id_usuario, id_pedido)
     respuesta = api_consultar_pedido(id_pedido, id_usuario)
 
-    # raise PedidoInvalido if pedido_no_encontrado(respuesta)
+    raise PedidoInvalido if pedido_no_encontrado(respuesta)
 
     devolver_pedido(respuesta)
   end
 
   private
 
-  # def pedido_no_encontrado(respuesta)
-  #   respuesta.status != 200
-  # end
+  def pedido_no_encontrado(respuesta)
+    respuesta.status != 200
+  end
 
   def api_consultar_pedido(id_pedido, _id_usuario)
     url = obtener_url('/pedidos')

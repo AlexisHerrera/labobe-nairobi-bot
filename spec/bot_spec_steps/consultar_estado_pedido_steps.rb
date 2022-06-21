@@ -10,6 +10,16 @@ def dado_que_quiero_ver_el_estado_de_mi_pedido
                  response)
 end
 
+def dado_que_quiero_ver_el_estado_de_un_pedido_inexistente
+  response = { error: 'El pedido no existe' }.to_json
+
+  configurar_api(:get,
+                 obtener_url('/pedidos') + '?id=209',
+                 nil,
+                 404,
+                 response)
+end
+
 def cuando_envio(token, mensaje)
   when_i_send_text(token, mensaje)
 end

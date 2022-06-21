@@ -14,4 +14,13 @@ describe 'Consulta estado pedido' do
     start_bot(token)
     expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
   end
+
+  it 'cuando envio </consultar npedido> a un pedido inexistente debe responder con un error' do
+    dado_que_quiero_ver_el_estado_de_un_pedido_inexistente
+    cuando_envio(token, '/consultar 209')
+    y_recibo_mensaje(token, 'No se pudo consultar el pedido. Asegurese de que el pedido exista.')
+
+    start_bot(token)
+    expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
+  end
 end
