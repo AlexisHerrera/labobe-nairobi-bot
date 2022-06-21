@@ -7,6 +7,7 @@ require 'byebug'
 require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
 require_relative 'errors/pedido_invalido.rb'
+require_relative 'errors/usuario_no_coincide.rb'
 
 class Routes
   include Routing
@@ -62,7 +63,10 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: parser.consulta_estado_exitosa(pedido.id_pedido, pedido.estado))
   rescue PedidoInvalido
     bot_logger.info "Pedido invalido: #{args}"
-    bot.api.send_message(chat_id: message.chat.id, text: parser.consulta_estado_no_exitosa)
+    bot.api.send_message(chat_id: message.chat.id, text: parser.consulta_estado_no_exitosa_pedido_inexistente)
+  rescue UsuarioNoCoincide
+    bot_logger.info "Usuario: #{message.from.id.to_i} consulto estado de pedido #{args} y no es el dueño"
+    bot.api.send_message(chat_id: message.chat.id, text: parser.consulta_estado_no_exitosa_usuario_no_coincide)
   end
 
   default do |bot, message|

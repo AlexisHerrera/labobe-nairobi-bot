@@ -46,13 +46,19 @@ class APIBobe
 
     raise PedidoInvalido if pedido_no_encontrado(respuesta)
 
+    raise UsuarioNoCoincide if usuario_no_coincide(respuesta)
+
     devolver_pedido(respuesta)
   end
 
   private
 
   def pedido_no_encontrado(respuesta)
-    respuesta.status != 200
+    respuesta.status == 404
+  end
+
+  def usuario_no_coincide(respuesta)
+    respuesta.status == 401
   end
 
   def api_consultar_pedido(id_pedido, id_usuario)

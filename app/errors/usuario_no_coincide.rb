@@ -1,0 +1,1 @@
+class UsuarioNoCoincide < StandardError; end

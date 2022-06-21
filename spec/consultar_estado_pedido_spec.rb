@@ -23,4 +23,13 @@ describe 'Consulta estado pedido' do
     start_bot(token)
     expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
   end
+
+  it 'cuando envio </consultar npedido> a un pedido que no es mio debe responder con un error' do
+    dado_que_quiero_ver_el_estado_de_un_pedido_que_no_es_mio
+    cuando_envio(token, '/consultar 1')
+    y_recibo_mensaje(token, 'El usuario no coincide con el dueño del pedido.')
+
+    start_bot(token)
+    expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
+  end
 end

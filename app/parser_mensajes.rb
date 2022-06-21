@@ -29,7 +29,11 @@ class ParserDeMensajes
     "Pedido #{id_pedido}: #{estado}"
   end
 
-  def consulta_estado_no_exitosa
+  def consulta_estado_no_exitosa_pedido_inexistente
     'No se pudo consultar el pedido. Asegurese de que el pedido exista.'
+  end
+
+  def consulta_estado_no_exitosa_usuario_no_coincide
+    'El usuario no coincide con el dueño del pedido.'
   end
 end

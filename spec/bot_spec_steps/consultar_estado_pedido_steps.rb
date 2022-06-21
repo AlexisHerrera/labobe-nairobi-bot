@@ -22,6 +22,18 @@ def dado_que_quiero_ver_el_estado_de_un_pedido_inexistente
                  response)
 end
 
+def dado_que_quiero_ver_el_estado_de_un_pedido_que_no_es_mio
+  # parametros = { 'id_pedido' => 9999, 'id_usuario' => 141_733_544 }.to_json
+  response = { error: 'El usuario no coincide con el duenio del pedido.' }.to_json
+
+  # habria que cambiar el id_usuario por otro cualquiera?
+  configurar_api(:get,
+                 'http://webapp:3000/pedidos?id_pedido=1&id_usuario=141733544',
+                 nil,
+                 401,
+                 response)
+end
+
 def cuando_envio(token, mensaje)
   when_i_send_text(token, mensaje)
 end
