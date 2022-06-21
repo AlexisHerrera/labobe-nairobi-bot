@@ -55,9 +55,9 @@ class APIBobe
     respuesta.status != 200
   end
 
-  def api_consultar_pedido(id_pedido, _id_usuario)
+  def api_consultar_pedido(id_pedido, id_usuario)
     url = obtener_url('/pedidos')
-    parametros = { 'id' => id_pedido }
+    parametros = { 'id_pedido' => id_pedido, 'id_usuario' => id_usuario }
 
     respuesta = Faraday.get(url, parametros, @header)
     @logger.info "Consultar pedido respuesta de la API: #{respuesta.to_hash}"
