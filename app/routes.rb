@@ -1,6 +1,5 @@
 require "#{File.dirname(__FILE__)}/../lib/routing"
 require "#{File.dirname(__FILE__)}/../lib/version"
-require "#{File.dirname(__FILE__)}/tv/series"
 require_relative 'api_bobe.rb'
 require_relative 'parser_mensajes.rb'
 require 'byebug'
