@@ -6,7 +6,6 @@ require_relative 'pedido.rb'
 require 'semantic_logger'
 require 'byebug'
 
-# rubocop:disable Metrics/ClassLength
 class APIBobe
   def initialize
     @header = {
@@ -121,13 +120,6 @@ class APIBobe
     usuario_registrado
   end
 
-  def devolver_repartidor_registrado(respuesta)
-    cuerpo_respuesta = JSON.parse(respuesta.body)
-    repartidor_registrado = Repartidor.new(cuerpo_respuesta['nombre'], cuerpo_respuesta['dni'], cuerpo_respuesta['telefono'])
-    @logger.info "Se registra al repartidor #{repartidor_registrado.nombre}, #{repartidor_registrado.dni}, #{repartidor_registrado.telefono}"
-    repartidor_registrado
-  end
-
   def error_al_registrarse(respuesta)
     hay_error = respuesta.status != 201
     @logger.info 'Error al registrar al usuario' if hay_error
@@ -152,5 +144,3 @@ class APIBobe
     (ENV['API_URL']).to_s + directorio
   end
 end
-
-# rubocop:enable Metrics/ClassLength

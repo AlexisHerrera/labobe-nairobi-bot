@@ -7,7 +7,6 @@ require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
 require_relative 'errors/pedido_invalido.rb'
 require_relative 'errors/usuario_no_coincide.rb'
-require_relative 'errors/repartidor_invalido.rb'
 
 class Routes
   include Routing
@@ -26,15 +25,6 @@ class Routes
 
   on_message '/equipo' do |bot, message|
     bot.api.send_message(chat_id: message.chat.id, text: 'Hola Nairobi')
-  end
-
-  on_message_pattern %r{/registrarRepartidor (?<nombre>.*), (?<dni>.*), (?<telefono>.*)} do |bot, message, args|
-    repartidor = api_bobe.registro_repartidor(args['nombre'], args['dni'], args['telefono'], message.from.id.to_s)
-    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_repartidor_exitoso(repartidor.nombre))
-    bot_logger.info "Registro de repartidor exitoso: #{args} "
-  rescue RepartidorInvalido
-    bot_logger.info "Error al registrar repartdidor: #{args}"
-    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_repartidor_no_exitoso_datos_invalidos)
   end
 
   on_message_pattern %r{/registrar (?<nombre>.*), (?<telefono>.*), (?<direccion>.*)} do |bot, message, args|
