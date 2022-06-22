@@ -7,6 +7,7 @@ require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
 require_relative 'errors/pedido_invalido.rb'
 require_relative 'errors/usuario_no_coincide.rb'
+require_relative 'errors/repartidor_invalido.rb'
 
 class Routes
   include Routing
@@ -31,23 +32,26 @@ class Routes
     repartidor = api_bobe.registro_repartidor(args['nombre'], args['dni'], args['telefono'], message.from.id.to_s)
     bot.api.send_message(chat_id: message.chat.id, text: parser.registro_repartidor_exitoso(repartidor.nombre))
     bot_logger.info "Registro de repartidor exitoso: #{args} "
+  rescue RepartidorInvalido
+    bot_logger.info "Error al registrar repartdidor: #{args}"
+    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_repartidor_no_exitoso_datos_invalidos)
   end
 
   on_message_pattern %r{/registrar (?<nombre>.*), (?<telefono>.*), (?<direccion>.*)} do |bot, message, args|
     usuario = api_bobe.registro_usuario(args['nombre'], args['telefono'], args['direccion'], message.from.id.to_s)
-    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_exitoso(usuario.nombre))
+    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_usuario_exitoso(usuario.nombre))
     bot_logger.info "Registro de usuario exitoso: #{args} "
   rescue UsuarioInvalido
     bot_logger.info "Error al registrar usuario: #{args}"
-    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_no_exitoso_datos_invalidos)
+    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_usuario_no_exitoso_datos_invalidos)
   rescue UsuarioYaRegistrado
     bot_logger.info "El usuario ya estaba registrado: #{args}"
-    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_no_exitoso_ya_registrado)
+    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_usuario_no_exitoso_ya_registrado)
   end
 
   on_message_pattern %r{/registrar (?<nombre>.*), (?<direccion>.*)} do |bot, message, args|
     bot_logger.info "Error de parametros en registrar: #{args}"
-    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_no_exitoso_datos_invalidos)
+    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_usuario_no_exitoso_datos_invalidos)
   end
 
   on_message '/menus' do |bot, message|

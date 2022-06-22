@@ -1,5 +1,6 @@
 require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
+require_relative 'errors/repartidor_invalido.rb'
 require_relative 'usuario.rb'
 require_relative 'repartidor.rb'
 require_relative 'menu.rb'
@@ -30,6 +31,7 @@ class APIBobe
 
   def registro_repartidor(nombre, dni, telefono, id_telegram)
     respuesta = api_registrar_repartidor(nombre, dni, telefono, id_telegram)
+    raise RepartidorInvalido if error_al_registrar_repartidor(respuesta)
 
     devolver_repartidor_registrado(respuesta)
   end
@@ -138,6 +140,12 @@ class APIBobe
   def error_al_registrarse(respuesta)
     hay_error = respuesta.status != 201
     @logger.info 'Error al registrar al usuario' if hay_error
+    hay_error
+  end
+
+  def error_al_registrar_repartidor(respuesta)
+    hay_error = respuesta.status != 201
+    @logger.info 'Error al registrar al repartidor' if hay_error
     hay_error
   end
 

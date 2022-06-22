@@ -1,0 +1,1 @@
+class RepartidorInvalido < StandardError; end

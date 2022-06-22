@@ -1,5 +1,5 @@
 class ParserDeMensajes
-  def registro_exitoso(nombre)
+  def registro_usuario_exitoso(nombre)
     "Bienvenido #{nombre}!, te registraste exitosamente."
   end
 
@@ -7,11 +7,15 @@ class ParserDeMensajes
     "Bienvenido #{nombre}!, te registraste exitosamente como repartidor."
   end
 
-  def registro_no_exitoso_datos_invalidos
+  def registro_usuario_no_exitoso_datos_invalidos
     'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850'
   end
 
-  def registro_no_exitoso_ya_registrado
+  def registro_repartidor_no_exitoso_datos_invalidos
+    'Datos invalidos, ingrese un nombre valido, dni de 8 digitos, telefono de 10 digitos. Ejemplo: /registrarRepartidor Ana C, 45670123, 1234567890'
+  end
+
+  def registro_usuario_no_exitoso_ya_registrado
     'Ya estás registrado'
   end
 
