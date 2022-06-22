@@ -57,7 +57,7 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: parser.pedido_invalido)
   end
 
-  on_message_pattern %r{/consultar (?<numeroPedido>.*)} do |bot, message, args|
+  on_message_pattern %r{/pedido (?<numeroPedido>.*)} do |bot, message, args|
     pedido = api_bobe.consultar_pedido(message.from.id.to_i, args['numeroPedido'].to_i)
     bot.api.send_message(chat_id: message.chat.id, text: parser.consulta_estado_exitosa(pedido.id_pedido, pedido.estado))
   rescue PedidoInvalido
