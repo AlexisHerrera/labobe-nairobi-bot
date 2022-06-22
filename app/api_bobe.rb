@@ -1,8 +1,6 @@
 require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
-require_relative 'errors/repartidor_invalido.rb'
 require_relative 'usuario.rb'
-require_relative 'repartidor.rb'
 require_relative 'menu.rb'
 require_relative 'pedido.rb'
 require 'semantic_logger'
@@ -27,13 +25,6 @@ class APIBobe
     raise UsuarioInvalido if error_al_registrarse(respuesta)
 
     devolver_usuario_registrado(respuesta)
-  end
-
-  def registro_repartidor(nombre, dni, telefono, id_telegram)
-    respuesta = api_registrar_repartidor(nombre, dni, telefono, id_telegram)
-    raise RepartidorInvalido if error_al_registrar_repartidor(respuesta)
-
-    devolver_repartidor_registrado(respuesta)
   end
 
   def pedir_menus
@@ -143,12 +134,6 @@ class APIBobe
     hay_error
   end
 
-  def error_al_registrar_repartidor(respuesta)
-    hay_error = respuesta.status != 201
-    @logger.info 'Error al registrar al repartidor' if hay_error
-    hay_error
-  end
-
   def es_usuario_registrado(respuesta)
     el_usuario_esta_registrado = respuesta.status == 200
     @logger.info 'El usuario ya esta registrado' if el_usuario_esta_registrado
@@ -160,14 +145,6 @@ class APIBobe
     parametros = { 'nombre' => nombre, 'telefono' => telefono, 'direccion' => direccion, 'id_telegram' => id_telegram }.to_json
     respuesta = Faraday.post(url, parametros, @header)
     @logger.info "Registro usuario respuesta de la API: #{respuesta.to_hash}"
-    respuesta
-  end
-
-  def api_registrar_repartidor(nombre, dni, telefono, id_telegram)
-    url = obtener_url('/repartidores')
-    parametros = { 'nombre' => nombre, 'dni' => dni, 'telefono' => telefono, 'id_telegram' => id_telegram }.to_json
-    respuesta = Faraday.post(url, parametros, @header)
-    @logger.info "Registro repartidor respuesta de la API: #{respuesta.to_hash}"
     respuesta
   end
 

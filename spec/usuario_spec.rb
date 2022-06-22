@@ -1,5 +1,4 @@
 require 'spec_helper'
-require_relative '../app/repartidor.rb'
 
 describe 'Usuario' do
   it 'debe guardar usuario' do
