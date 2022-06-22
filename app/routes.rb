@@ -27,6 +27,12 @@ class Routes
     bot.api.send_message(chat_id: message.chat.id, text: 'Hola Nairobi')
   end
 
+  on_message_pattern %r{/registrarRepartidor (?<nombre>.*), (?<dni>.*), (?<telefono>.*)} do |bot, message, args|
+    repartidor = api_bobe.registro_repartidor(args['nombre'], args['dni'], args['telefono'], message.from.id.to_s)
+    bot.api.send_message(chat_id: message.chat.id, text: parser.registro_repartidor_exitoso(repartidor.nombre))
+    bot_logger.info "Registro de repartidor exitoso: #{args} "
+  end
+
   on_message_pattern %r{/registrar (?<nombre>.*), (?<telefono>.*), (?<direccion>.*)} do |bot, message, args|
     usuario = api_bobe.registro_usuario(args['nombre'], args['telefono'], args['direccion'], message.from.id.to_s)
     bot.api.send_message(chat_id: message.chat.id, text: parser.registro_exitoso(usuario.nombre))

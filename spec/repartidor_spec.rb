@@ -7,7 +7,7 @@ describe 'Repartidor' do
     dni = '46651489'
     telefono = '1234567890'
 
-    repartidor = Repartidor.new(nombre, telefono, dni)
+    repartidor = Repartidor.new(nombre, dni, telefono)
 
     expect(repartidor.nombre).to eq nombre
     expect(repartidor.dni).to eq dni

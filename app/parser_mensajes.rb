@@ -3,6 +3,10 @@ class ParserDeMensajes
     "Bienvenido #{nombre}!, te registraste exitosamente."
   end
 
+  def registro_repartidor_exitoso(nombre)
+    "Bienvenido #{nombre}!, te registraste exitosamente como repartidor."
+  end
+
   def registro_no_exitoso_datos_invalidos
     'Datos invalidos, ingrese un telefono de 10 digitos, un nombre valido y una direccion. /registrar Francisco, 1144449999, paseo colon 850'
   end
