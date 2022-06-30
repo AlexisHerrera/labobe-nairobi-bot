@@ -36,4 +36,8 @@ class ParserDeMensajes
   def consulta_estado_no_exitosa_usuario_no_coincide
     'El usuario no coincide con el dueño del pedido.'
   end
+
+  def calificacion_pedido_exitosa
+    'Se ha calificado el pedido.'
+  end
 end

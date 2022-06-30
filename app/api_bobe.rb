@@ -6,6 +6,7 @@ require_relative 'pedido.rb'
 require 'semantic_logger'
 require 'byebug'
 
+# rubocop: disable Metrics/ClassLength
 class APIBobe
   def initialize
     @header = {
@@ -52,7 +53,18 @@ class APIBobe
     devolver_pedido(respuesta)
   end
 
+  def calificar_pedido(id_pedido, id_usuario, calificacion)
+    api_calificar_pedido(id_pedido, id_usuario, calificacion)
+  end
+
   private
+
+  def api_calificar_pedido(id_pedido, id_usuario, calificacion)
+    url = obtener_url('/pedidosCalificados')
+    parametros = { id_pedido: id_pedido, id_usuario: id_usuario, calificacion: calificacion }.to_json
+
+    Faraday.patch(url, parametros, @header)
+  end
 
   def pedido_no_encontrado(respuesta)
     respuesta.status == 404
@@ -144,3 +156,4 @@ class APIBobe
     (ENV['API_URL']).to_s + directorio
   end
 end
+# rubocop: enable Metrics/ClassLength
