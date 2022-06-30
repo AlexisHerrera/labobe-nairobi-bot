@@ -1,7 +1,7 @@
 require_relative 'bot_client_steps'
 
 def dado_que_quiero_calificar_mi_pedido
-  request = { id_pedido: 1, id_usuario: 141_733_544, calificacion: 5 }.to_json
+  request = { id_pedido: 1, id_usuario: '141733544', calificacion: 5 }.to_json
 
   configurar_api(:patch,
                  'http://webapp:3000/pedidosCalificados',
@@ -11,7 +11,7 @@ def dado_que_quiero_calificar_mi_pedido
 end
 
 def dado_que_quiero_calificar_un_pedido_inexistente
-  request = { id_pedido: 9999, id_usuario: 141_733_544, calificacion: 5 }.to_json
+  request = { id_pedido: 9999, id_usuario: '141733544', calificacion: 5 }.to_json
   response = { error: 'calificacion pedido' }.to_json
 
   configurar_api(:patch,
@@ -22,7 +22,7 @@ def dado_que_quiero_calificar_un_pedido_inexistente
 end
 
 def dado_que_quiero_calificar_una_calificacion_invalida(calificacion)
-  request = { id_pedido: 1, id_usuario: 141_733_544, calificacion: calificacion }.to_json
+  request = { id_pedido: 1, id_usuario: '141733544', calificacion: calificacion }.to_json
   response = { error: 'calificacion pedido' }.to_json
 
   configurar_api(:patch,
@@ -33,7 +33,7 @@ def dado_que_quiero_calificar_una_calificacion_invalida(calificacion)
 end
 
 def dado_que_quiero_calificar_un_pedido_no_entregado
-  request = { id_pedido: 1, id_usuario: 141_733_544, calificacion: 5 }.to_json
+  request = { id_pedido: 1, id_usuario: '141733544', calificacion: 5 }.to_json
   response = { error: 'calificacion pedido' }.to_json
 
   configurar_api(:patch,
@@ -44,7 +44,7 @@ def dado_que_quiero_calificar_un_pedido_no_entregado
 end
 
 def dado_que_quiero_calificar_un_pedido_de_otro
-  request = { id_pedido: 1, id_usuario: 141_733_544, calificacion: 5 }.to_json
+  request = { id_pedido: 1, id_usuario: '141733544', calificacion: 5 }.to_json
   response = { error: 'calificacion pedido' }.to_json
 
   configurar_api(:patch,

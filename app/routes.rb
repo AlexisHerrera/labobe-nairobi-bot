@@ -70,7 +70,7 @@ class Routes
   end
 
   on_message_pattern %r{/calificar (?<numeroPedido>.*), (?<calificacion>.*)} do |bot, message, args|
-    api_bobe.calificar_pedido(args['numeroPedido'].to_i, message.from.id.to_i, args['calificacion'].to_i)
+    api_bobe.calificar_pedido(args['numeroPedido'].to_i, message.from.id.to_s, args['calificacion'].to_i)
     bot.api.send_message(chat_id: message.chat.id, text: parser.calificacion_pedido_exitosa)
   rescue PedidoInvalido
     bot_logger.info "Calificacion a Pedido invalido: #{args}"
