@@ -21,6 +21,17 @@ def dado_que_quiero_calificar_un_pedido_inexistente
                  response)
 end
 
+def dado_que_quiero_calificar_una_calificacion_invalida(calificacion)
+  request = { id_pedido: 1, id_usuario: 141_733_544, calificacion: calificacion }.to_json
+  response = { error: 'calificacion pedido' }.to_json
+
+  configurar_api(:patch,
+                 'http://webapp:3000/pedidosCalificados',
+                 request,
+                 400,
+                 response)
+end
+
 def cuando_envio(token, mensaje)
   when_i_send_text(token, mensaje)
 end

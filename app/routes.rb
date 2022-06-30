@@ -72,8 +72,11 @@ class Routes
     api_bobe.calificar_pedido(args['numeroPedido'].to_i, message.from.id.to_i, args['calificacion'].to_i)
     bot.api.send_message(chat_id: message.chat.id, text: parser.calificacion_pedido_exitosa)
   rescue PedidoInvalido
-    bot_logger.info "Pedido invalido: #{args}"
+    bot_logger.info "Calificacion a Pedido invalido: #{args}"
     bot.api.send_message(chat_id: message.chat.id, text: parser.consulta_estado_no_exitosa_pedido_inexistente)
+  rescue CalificacionInvalida
+    bot_logger.info "Calificacion invalida a pedido: #{args}"
+    bot.api.send_message(chat_id: message.chat.id, text: parser.calificacion_invalida)
   end
 
   default do |bot, message|

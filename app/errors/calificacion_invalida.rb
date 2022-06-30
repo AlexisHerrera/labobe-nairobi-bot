@@ -1,0 +1,1 @@
+class CalificacionInvalida < StandardError; end

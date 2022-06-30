@@ -23,4 +23,13 @@ describe 'Calificacion pedido' do
     start_bot(token)
     expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
   end
+
+  it 'cuando envio </calificar npedido, calificacion> con un valor que excede el rango debería responder diciendo que la calificacion es invalida' do
+    dado_que_quiero_calificar_una_calificacion_invalida(10)
+    cuando_envio(token, '/calificar 1, 10')
+    y_recibo_mensaje(token, 'Calificación inválida. Por favor califique con un valor de 1 a 5.')
+
+    start_bot(token)
+    expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
+  end
 end

@@ -40,4 +40,8 @@ class ParserDeMensajes
   def calificacion_pedido_exitosa
     'Se ha calificado el pedido.'
   end
+
+  def calificacion_invalida
+    'Calificación inválida. Por favor califique con un valor de 1 a 5.'
+  end
 end

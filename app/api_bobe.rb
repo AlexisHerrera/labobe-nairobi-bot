@@ -1,5 +1,6 @@
 require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
+require_relative 'errors/calificacion_invalida.rb'
 require_relative 'usuario.rb'
 require_relative 'menu.rb'
 require_relative 'pedido.rb'
@@ -57,6 +58,7 @@ class APIBobe
     respuesta = api_calificar_pedido(id_pedido, id_usuario, calificacion)
 
     raise PedidoInvalido if pedido_no_encontrado(respuesta)
+    raise CalificacionInvalida if calificacion_invalida?(respuesta)
   end
 
   private
@@ -74,6 +76,10 @@ class APIBobe
 
   def usuario_no_coincide(respuesta)
     respuesta.status == 401
+  end
+
+  def calificacion_invalida?(respuesta)
+    respuesta.status == 400
   end
 
   def api_consultar_pedido(id_pedido, id_usuario)
