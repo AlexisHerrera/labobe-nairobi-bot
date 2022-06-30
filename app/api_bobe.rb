@@ -60,6 +60,7 @@ class APIBobe
     raise PedidoInvalido if pedido_no_encontrado(respuesta)
     raise CalificacionInvalida if calificacion_invalida?(respuesta)
     raise EstadoPedidoInvalido if estado_pedido_invalido?(respuesta)
+    raise UsuarioNoCoincide if usuario_no_coincide(respuesta)
   end
 
   private
@@ -76,7 +77,7 @@ class APIBobe
   end
 
   def usuario_no_coincide(respuesta)
-    respuesta.status == 401
+    respuesta.status == 401 || respuesta.status == 409
   end
 
   def calificacion_invalida?(respuesta)

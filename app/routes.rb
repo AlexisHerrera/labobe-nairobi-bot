@@ -81,6 +81,9 @@ class Routes
   rescue EstadoPedidoInvalido
     bot_logger.info "Calificacion a Pedido no entregado: #{args}"
     bot.api.send_message(chat_id: message.chat.id, text: parser.calificacion_pedido_no_entregado)
+  rescue UsuarioNoCoincide
+    bot_logger.info "Usuario: #{message.from.id.to_i} quiso calificar pedido #{args} y no es el dueño"
+    bot.api.send_message(chat_id: message.chat.id, text: parser.consulta_estado_no_exitosa_usuario_no_coincide)
   end
 
   default do |bot, message|
