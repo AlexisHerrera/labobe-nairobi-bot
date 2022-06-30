@@ -54,7 +54,9 @@ class APIBobe
   end
 
   def calificar_pedido(id_pedido, id_usuario, calificacion)
-    api_calificar_pedido(id_pedido, id_usuario, calificacion)
+    respuesta = api_calificar_pedido(id_pedido, id_usuario, calificacion)
+
+    raise PedidoInvalido if pedido_no_encontrado(respuesta)
   end
 
   private
