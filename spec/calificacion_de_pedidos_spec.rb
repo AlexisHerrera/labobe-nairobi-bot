@@ -50,4 +50,13 @@ describe 'Calificacion pedido' do
     start_bot(token)
     expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
   end
+
+  it 'cuando envio </calificar npedido, calificacion> a un pedido no entregado debería responder diciendo que sólo se puede calificar pedidos entregados' do
+    dado_que_quiero_calificar_un_pedido_no_entregado
+    cuando_envio(token, '/calificar 1, 5')
+    y_recibo_mensaje(token, 'Sólo se puede calificar pedidos entregados.')
+
+    start_bot(token)
+    expect(a_request(:post, "https://api.telegram.org/bot#{token}/sendMessage")).to have_been_made.at_least_once
+  end
 end

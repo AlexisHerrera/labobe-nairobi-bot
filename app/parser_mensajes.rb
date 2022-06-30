@@ -44,4 +44,8 @@ class ParserDeMensajes
   def calificacion_invalida
     'Calificación inválida. Por favor califique con un valor de 1 a 5.'
   end
+
+  def calificacion_pedido_no_entregado
+    'Sólo se puede calificar pedidos entregados.'
+  end
 end

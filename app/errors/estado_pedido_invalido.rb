@@ -1,0 +1,1 @@
+class EstadoPedidoInvalido < StandardError; end

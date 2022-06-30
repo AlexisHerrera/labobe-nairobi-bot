@@ -7,6 +7,7 @@ require_relative 'errors/usuario_invalido.rb'
 require_relative 'errors/usuario_ya_registrado.rb'
 require_relative 'errors/pedido_invalido.rb'
 require_relative 'errors/usuario_no_coincide.rb'
+require_relative 'errors/estado_pedido_invalido.rb'
 
 class Routes
   include Routing
@@ -77,6 +78,9 @@ class Routes
   rescue CalificacionInvalida
     bot_logger.info "Calificacion invalida a pedido: #{args}"
     bot.api.send_message(chat_id: message.chat.id, text: parser.calificacion_invalida)
+  rescue EstadoPedidoInvalido
+    bot_logger.info "Calificacion a Pedido no entregado: #{args}"
+    bot.api.send_message(chat_id: message.chat.id, text: parser.calificacion_pedido_no_entregado)
   end
 
   default do |bot, message|

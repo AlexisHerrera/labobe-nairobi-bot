@@ -59,6 +59,7 @@ class APIBobe
 
     raise PedidoInvalido if pedido_no_encontrado(respuesta)
     raise CalificacionInvalida if calificacion_invalida?(respuesta)
+    raise EstadoPedidoInvalido if estado_pedido_invalido?(respuesta)
   end
 
   private
@@ -80,6 +81,10 @@ class APIBobe
 
   def calificacion_invalida?(respuesta)
     respuesta.status == 400
+  end
+
+  def estado_pedido_invalido?(respuesta)
+    respuesta.status == 403
   end
 
   def api_consultar_pedido(id_pedido, id_usuario)
